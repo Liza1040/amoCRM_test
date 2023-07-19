@@ -3,6 +3,13 @@ const buttonEl = document.querySelector('button');
 const timerEl = document.querySelector('span');
 let timer;
 
+const ifOneDigit = (number) => {
+    if (number < 10) {
+        number = `0${number}`;
+    }
+    return number;
+};
+
 // Напишите реализацию createTimerAnimator
 // который будет анимировать timerEl
 const createTimerAnimator = () => {
@@ -15,20 +22,10 @@ const createTimerAnimator = () => {
             clearInterval(timer);
             alert("Время закончилось");
         } else {
-            seconds = timeInSeconds % 60;
-            if (seconds < 10) {
-                seconds = `0${seconds}`;
-            }
-            minutes = Math.trunc(timeInSeconds / 60 % 60);
-            if (minutes < 10) {
-                minutes = `0${minutes}`;
-            }
-            hour = Math.trunc(timeInSeconds / 60 / 60 % 60);
-            if (hour < 10) {
-                hour = `0${hour}`;
-            }
-            let strTimer = `${hour}:${minutes}:${seconds}`;
-            timerEl.innerHTML = strTimer;
+            seconds = ifOneDigit(timeInSeconds % 60);
+            minutes = ifOneDigit(Math.trunc(timeInSeconds / 60 % 60));
+            hour = ifOneDigit(Math.trunc(timeInSeconds / 60 / 60 % 60));
+            timerEl.innerHTML = `${hour}:${minutes}:${seconds}`;
         }
         --timeInSeconds;
     }, 1000)
